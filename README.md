@@ -51,37 +51,6 @@ npm run dev
 
 5. Open your browser and navigate to `http://localhost:5173` to view the application.
 
-## Project Structure
-
-The project is organized into several key directories:
-
-## Project Structure
-
-product/
-├── public/
-│ └── products/
-│ ├── women/
-│ ├── men/
-│ ├── kids/
-│ └── accessories/
-├── src/
-│ ├── components/
-│ │ ├── product/
-│ │ │ ├── ProductCard.jsx
-│ │ │ ├── ProductDetails.jsx
-│ │ │ ├── ProductGallery.jsx
-│ │ │ ├── ProductInfo.jsx
-│ │ │ ├── RelatedProducts.jsx
-│ │ │ └── StarRating.jsx
-│ │ ├── Navbar.jsx
-│ │ ├── Footer.jsx
-│ │ └── ...
-│ ├── pages/
-│ │ ├── HomePage.jsx
-│ │ ├── CategoryPage.jsx
-│ │ └── ProductPage.jsx
-│ └── App.jsx
-
 ## Available Scripts
 
 - `npm run dev` - Starts the development server
