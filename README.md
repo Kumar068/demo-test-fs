@@ -27,14 +27,14 @@ A modern e-commerce platform built with React, featuring a clean design and seam
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/fashion-ecommerce-store.git
-cd fashion-ecommerce-store
+git clone https://github.com/kumaracufore/demo-test-fs.git
+cd product
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd fashion-ecommerce-store
+cd product
 ```
 
 3. Install dependencies:
