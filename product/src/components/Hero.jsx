@@ -1,4 +1,5 @@
 import "./Hero.css";
+import { Link } from "react-router-dom";
 
 function Hero() {
   return (
@@ -9,7 +10,7 @@ function Hero() {
           Discover the latest trends and elevate your style with our exclusive
           summer pieces.
         </p>
-        <button className="shop-now">Shop Now</button>
+        <Link to="/category/all" className="shop-now">Shop Now</Link>
       </div>
     </section>
   );

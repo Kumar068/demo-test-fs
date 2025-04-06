@@ -1,25 +1,34 @@
 import { useState } from "react";
 import "./ProductGallery.css";
 
-function ProductGallery({ images }) {
-  const [mainImage, setMainImage] = useState(images[0]);
+function ProductGallery({ images = [] }) {
+  const [selectedImage, setSelectedImage] = useState(0);
+  
+  // If no images provided, use an empty array
+  const productImages = images.length > 0 ? images : [];
 
   return (
     <div className="product-gallery">
       <div className="main-image">
-        <img src={mainImage} alt="Product" />
+        {productImages.length > 0 ? (
+          <img src={productImages[selectedImage]} alt="Product" />
+        ) : (
+          <div className="no-image">No image available</div>
+        )}
       </div>
-      <div className="thumbnail-list">
-        {images.map((image, index) => (
-          <button
-            key={index}
-            className={`thumbnail ${image === mainImage ? "active" : ""}`}
-            onClick={() => setMainImage(image)}
-          >
-            <img src={image} alt={`Product view ${index + 1}`} />
-          </button>
-        ))}
-      </div>
+      {productImages.length > 1 && (
+        <div className="thumbnail-list">
+          {productImages.map((image, index) => (
+            <button
+              key={index}
+              className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
+              onClick={() => setSelectedImage(index)}
+            >
+              <img src={image} alt={`Product thumbnail ${index + 1}`} />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

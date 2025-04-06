@@ -1,4 +1,5 @@
 import "./StyleSection.css";
+import { Link } from "react-router-dom";
 
 function StyleSection() {
   const styles = [
@@ -12,14 +13,18 @@ function StyleSection() {
       <h2 className="section-title">Shop by Style</h2>
       <div className="style-grid">
         {styles.map((style) => (
-          <div key={style.title} className="style-card">
+          <Link 
+            key={style.title} 
+            to="/category/all" 
+            className="style-card"
+          >
             <div
               className="style-image"
               style={{ backgroundImage: `url(${style.image})` }}
             >
               <h3>{style.title}</h3>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

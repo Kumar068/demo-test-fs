@@ -1,5 +1,6 @@
 import "./ProductInfo.css";
 import StarRating from "./StarRating";
+import React from 'react';
 
 function ProductInfo({
   product,
@@ -10,33 +11,52 @@ function ProductInfo({
   quantity,
   setQuantity,
 }) {
+  if (!product) return null;
+
+  const { 
+    name, 
+    price, 
+    description, 
+    colors = [], 
+    sizes = [], 
+    details = {},
+    rating = 0 
+  } = product;
+
   return (
     <div className="product-info">
-      <h1>{product.name}</h1>
-      <div className="price">${product.price}</div>
-
-      <div className="rating-section">
-        <StarRating rating={product.rating} />
-        <span className="review-count">
-          {product.rating} ({product.reviewCount} reviews)
-        </span>
+      <h1>{name}</h1>
+      <div className="price-rating">
+        <p className="price">${price?.toFixed(2)}</p>
+        <StarRating rating={rating || 0} />
       </div>
-
-      <div className="options-section">
-        <div className="size-selector">
-          <div className="option-label">
-            <span>Size</span>
-            <a href="#size-guide" className="size-guide">
-              Size guide
-            </a>
+      <p className="description">{description}</p>
+      
+      {colors.length > 0 && (
+        <div className="colors-section">
+          <h3>Available Colors</h3>
+          <div className="colors">
+            {colors.map((color, index) => (
+              <span
+                key={`color-${color}-${index}`}
+                className={`color-dot ${color === selectedColor ? 'selected' : ''}`}
+                style={{ backgroundColor: color }}
+                title={color}
+                onClick={() => setSelectedColor(color)}
+              />
+            ))}
           </div>
-          <div className="size-options">
-            {product.sizes.map((size) => (
+        </div>
+      )}
+
+      {sizes.length > 0 && (
+        <div className="sizes-section">
+          <h3>Available Sizes</h3>
+          <div className="sizes">
+            {sizes.map((size) => (
               <button
-                key={size}
-                className={`size-option ${
-                  selectedSize === size ? "selected" : ""
-                }`}
+                key={`size-${size}`}
+                className={`size-option ${size === selectedSize ? 'selected' : ''}`}
                 onClick={() => setSelectedSize(size)}
               >
                 {size}
@@ -44,33 +64,24 @@ function ProductInfo({
             ))}
           </div>
         </div>
+      )}
 
-        <div className="color-selector">
-          <span className="option-label">Color</span>
-          <div className="color-options">
-            {product.colors.map((color) => (
-              <button
-                key={color.name}
-                className={`color-option ${
-                  selectedColor === color.name ? "selected" : ""
-                }`}
-                style={{ backgroundColor: color.code }}
-                onClick={() => setSelectedColor(color.name)}
-                title={color.name}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="quantity-selector">
-          <span className="option-label">Quantity</span>
-          <div className="quantity-controls">
-            <button onClick={() => quantity > 1 && setQuantity(quantity - 1)}>
-              -
-            </button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)}>+</button>
-          </div>
+      <div className="quantity-section">
+        <h3>Quantity</h3>
+        <div className="quantity-controls">
+          <button 
+            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            disabled={quantity <= 1}
+          >
+            -
+          </button>
+          <span>{quantity}</span>
+          <button 
+            onClick={() => setQuantity(Math.min(2, quantity + 1))}
+            disabled={quantity >= 2}
+          >
+            +
+          </button>
         </div>
       </div>
 
@@ -78,6 +89,8 @@ function ProductInfo({
         <button className="add-to-cart">Add to Cart</button>
         <button className="buy-now">Buy Now</button>
       </div>
+
+      
 
       <div className="shipping-info">
         <div className="info-item">

@@ -2,29 +2,28 @@ import "./RelatedProducts.css";
 import ProductCard from "./ProductCard";
 
 function RelatedProducts() {
-  // This would typically come from an API based on the current product
   const relatedProducts = [
     {
-      id: "w2",
-      name: "Cable Knit Cardigan",
-      price: 275.0,
-      image: "/products/cardigan-1.jpg",
+      _id: "67f2631f10cf123eadc67ceb",
+      name: "Cashmere Blend Sweater",
+      price: 295.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/2c/P00979135.jpg",
       colors: ["cream", "black", "grey"],
     },
     {
-      id: "w3",
-      name: "V-Neck Classic Sweater",
-      price: 195.0,
-      image: "/products/sweater-2.jpg",
-      colors: ["navy", "grey", "black"],
+      _id: "67f2631f10cf123eadc67cec",
+      name: "Classic Oxford Shirt",
+      price: 129.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/31/P00996345.jpg",
+      colors: ["white", "blue", "pink"],
     },
     {
-      id: "w4",
-      name: "Cashmere Hoodie",
-      price: 325.0,
-      image: "/products/hoodie-1.jpg",
-      colors: ["grey", "black", "cream"],
-    },
+      _id: "67f2631f10cf123eadc67cf0",
+      name: "Silk Wrap Dress",
+      price: 385.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/11/P00974484.jpg",
+      colors: ["black", "navy", "red"],
+    }
   ];
 
   return (
@@ -32,7 +31,7 @@ function RelatedProducts() {
       <h2>You May Also Like</h2>
       <div className="related-grid">
         {relatedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </section>

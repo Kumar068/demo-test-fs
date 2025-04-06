@@ -1,52 +1,61 @@
 import "./NewArrivals.css";
+import { Link } from "react-router-dom";
 
 function NewArrivals() {
   const products = [
     {
-      id: 1,
-      name: "Designer Summer Dress",
-      price: 299.0,
-      image: "/products/dress.jpg",
+      id: "67f2631f10cf123eadc67cf0",
+      name: "Silk Wrap Dress",
+      price: 385.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/11/P00974484.jpg",
+      category: "women"
     },
     {
-      id: 2,
+      id: "67f2631f10cf123eadc67cee",
       name: "Premium Leather Bag",
       price: 459.0,
-      image: "/products/bag.jpg",
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/55/P00884151.jpg",
+      category: "accessories"
     },
     {
-      id: 3,
-      name: "Designer Sunglasses",
-      price: 199.0,
-      image: "/products/sunglasses.jpg",
+      id: "67f2631f10cf123eadc67ceb",
+      name: "Cashmere Blend Sweater",
+      price: 295.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/2c/P00979135.jpg",
+      category: "women"
     },
     {
-      id: 4,
-      name: "Premium Sneakers",
-      price: 259.0,
-      image: "/products/sneakers.jpg",
-    },
+      id: "67f2631f10cf123eadc67cec",
+      name: "Classic Oxford Shirt",
+      price: 129.0,
+      imageUrl: "https://www.mytheresa.com/media/1094/1238/100/31/P00996345.jpg",
+      category: "men"
+    }
   ];
 
   return (
     <section className="new-arrivals">
       <div className="section-header">
         <h2 className="section-title">New Arrivals</h2>
-        <a href="/all" className="view-all">
+        <Link to="/category/all" className="view-all">
           View All →
-        </a>
+        </Link>
       </div>
       <div className="grid-container">
         {products.map((product) => (
-          <div key={product.id} className="product-card">
+          <Link 
+            key={product.id} 
+            to={`/product/${product.id}`} 
+            className="product-card"
+          >
             <div className="product-image">
-              <img src={product.image} alt={product.name} />
+              <img src={product.imageUrl} alt={product.name} />
             </div>
             <div className="product-info">
               <h3>{product.name}</h3>
               <p className="price">${product.price.toFixed(2)}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

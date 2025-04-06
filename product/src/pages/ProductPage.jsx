@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getProduct } from '../services/api';
 import "./ProductPage.css";
 import ProductGallery from "../components/product/ProductGallery";
 import ProductInfo from "../components/product/ProductInfo";
@@ -6,46 +8,44 @@ import ProductDetails from "../components/product/ProductDetails";
 import RelatedProducts from "../components/product/RelatedProducts";
 
 function ProductPage() {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState("M");
-  const [selectedColor, setSelectedColor] = useState("cream");
+  const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
-  const product = {
-    name: "Cashmere Blend Sweater",
-    price: 295.0,
-    rating: 4.5,
-    reviewCount: 128,
-    colors: [
-      { name: "cream", code: "#F5F5DC" },
-      { name: "grey", code: "#808080" },
-      { name: "navy", code: "#000080" },
-    ],
-    sizes: ["XS", "S", "M", "L"],
-    images: [
-      "/products/sweater-1.jpg",
-      "/products/sweater-2.jpg",
-      "/products/sweater-3.jpg",
-    ],
-    details: {
-      description:
-        "This luxurious cashmere blend sweater combines timeless design with exceptional comfort. Crafted from a premium blend of cashmere and fine wool, it offers warmth without bulk and a softness that improves with wear.",
-      materials: [
-        "75% Cashmere",
-        "25% Fine wool",
-        "Sustainably sourced materials",
-      ],
-      care: [
-        "Hand wash cold",
-        "Do not tumble dry",
-        "Dry flat",
-        "Iron on low heat if needed",
-      ],
-    },
-  };
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const data = await getProduct(id);
+        setProduct(data);
+        setSelectedColor(data.colors[0]);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch product');
+        console.error('Error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (error || !product) {
+    return <div className="error">{error || 'Product not found'}</div>;
+  }
 
   return (
     <div className="product-page">
-      <div className="product-main">
+      <div className="product-main" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
         <ProductGallery images={product.images} />
         <ProductInfo
           product={product}

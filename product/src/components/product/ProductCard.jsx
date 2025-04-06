@@ -1,27 +1,34 @@
-import { Link } from "react-router-dom";
-import "./ProductCard.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './ProductCard.css';
 
 function ProductCard({ product }) {
+  if (!product) return null;
+  
+  const { _id, name, price, imageUrl, colors } = product;
+  
   return (
-    <Link to={`/product/${product.id}`} className="product-card">
-      <div className="product-image">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div className="product-info">
-        <h3>{product.name}</h3>
-        <p className="price">${product.price}</p>
-        <div className="color-options">
-          {product.colors.map((color) => (
-            <span
-              key={color}
-              className="color-dot"
-              style={{ backgroundColor: color }}
-              title={color}
-            />
-          ))}
+    <div className="product-card">
+      <Link to={`/product/${_id}`}>
+        <div className="product-image">
+          <img src={imageUrl} alt={name} />
         </div>
-      </div>
-    </Link>
+        <div className="product-info">
+          <h3>{name}</h3>
+          <p className="price">${price.toFixed(2)}</p>
+          <div className="colors">
+            {colors && colors.map((color, index) => (
+              <span 
+                key={index} 
+                className="color-dot" 
+                style={{ backgroundColor: color }}
+                title={color}
+              />
+            ))}
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
 

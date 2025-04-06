@@ -1,0 +1,669 @@
+.info-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #333;
+}
+
+.info-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #000;
+}
+
+.info-page h2 {
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+  color: #333;
+}
+
+.info-page h3 {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  color: #444;
+}
+
+.info-page h4 {
+  font-size: 1.2rem;
+  margin: 1rem 0 0.5rem;
+  color: #555;
+}
+
+.info-page p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Contact Section Styles */
+.contact-section {
+  margin: 2rem 0;
+}
+
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.contact-method {
+  padding: 1.5rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.contact-info {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4CAF50;
+  margin: 1rem 0;
+}
+
+.hours-info {
+  color: #666;
+  font-style: italic;
+}
+
+.chat-button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.chat-button:hover {
+  background: #45a049;
+}
+
+/* Contact Form Styles */
+.contact-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Social Links Styles */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.social-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #f8f8f8;
+  color: #333;
+}
+
+.social-btn:hover {
+  background: #4CAF50;
+  color: white;
+}
+
+/* FAQ Section Styles */
+.faq-section {
+  margin: 3rem 0;
+}
+
+.faq-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.faq-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Shipping Methods Styles */
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.shipping-method {
+  background: #f8f8f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.method-details {
+  margin-top: 1rem;
+}
+
+/* About Page Styles */
+.mission-statement {
+  font-size: 1.5rem;
+  font-style: italic;
+  text-align: center;
+  margin: 2rem 0;
+  color: #666;
+}
+
+.timeline {
+  margin: 3rem 0;
+}
+
+.milestone {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.milestone:not(:last-child):before {
+  content: "";
+  position: absolute;
+  left: 50px;
+  top: 40px;
+  bottom: -30px;
+  width: 2px;
+  background: #eee;
+}
+
+.year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
+  position: relative;
+  z-index: 1;
+}
+
+.milestone-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.milestone-content h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.value-item {
+  background: #f8f8f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.team-member {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.team-member .title {
+  color: #666;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.primary-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #45a049;
+}
+
+.secondary-btn {
+  background: white;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+}
+
+.secondary-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Size Guide Table Styles */
+.size-table-container {
+  margin: 2rem 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin: 1rem 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  color: #333;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #f8f8f8;
+}
+
+/* Store Locator Styles */
+.store-filter {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.region-select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  min-width: 200px;
+  color: black;
+}
+
+.stores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.store-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.store-card h3 {
+  background: #f8f8f8;
+  margin: 0;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.store-details {
+  padding: 1.5rem;
+}
+
+.address {
+  margin-bottom: 1.5rem;
+}
+
+.phone {
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.hours {
+  margin-bottom: 1.5rem;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features li {
+  padding: 0.25rem 0;
+  color: #666;
+}
+
+.features li:before {
+  content: "•";
+  color: #4CAF50;
+  margin-right: 0.5rem;
+}
+
+.store-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Sustainability Page Styles */
+.stats-highlight {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4CAF50;
+  margin-top: 1rem;
+}
+
+.goals-list {
+  flex: 1;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.certification-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.certification-icon {
+  color: #4CAF50;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Careers Page Styles */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.job-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.job-header {
+  background: #f8f8f8;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-header h3 {
+  margin: 0;
+}
+
+.job-type {
+  background: #4CAF50;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.job-details {
+  padding: 1.5rem;
+}
+
+.job-location {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.job-description {
+  margin-bottom: 1.5rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.benefit-category {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-category h3 {
+  margin-top: 0;
+  color: #4CAF50;
+  text-align: center;
+}
+
+.benefit-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.benefit-category li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.benefit-category li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .info-page {
+    padding: 1rem;
+  }
+
+  .info-page h1 {
+    font-size: 2rem;
+  }
+
+  .info-page h2 {
+    font-size: 1.75rem;
+  }
+
+  .info-page h3 {
+    font-size: 1.25rem;
+  }
+
+  .info-page h4 {
+    font-size: 1.1rem;
+  }
+
+  .mission-statement {
+    font-size: 1.25rem;
+  }
+
+  .milestone {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .milestone:not(:last-child):before {
+    left: 20px;
+  }
+
+  .year {
+    padding-left: 40px;
+  }
+
+  .milestone-content {
+    margin-left: 40px;
+  }
+
+  .contact-methods,
+  .values-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+  }
+
+  .table-responsive {
+    margin: 0.5rem -1rem;
+    border-radius: 0;
+  }
+
+  th, td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .filter-container {
+    flex-direction: column;
+  }
+
+  .region-select {
+    width: 100%;
+  }
+
+  .stores-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .store-actions {
+    flex-direction: column;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-highlight {
+    font-size: 1.1rem;
+  }
+
+  .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .job-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form {
+    padding: 1rem;
+  }
+
+  .social-links {
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+} 

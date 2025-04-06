@@ -1,42 +1,53 @@
 .product-details {
     margin: 4rem 0;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .details-section {
     padding: 2rem;
-    background: #f8f8f8;
+    background: #fafafa;
     border-radius: 8px;
 }
 
 .details-section h2 {
     font-size: 1.8rem;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
 }
 
 .details-section h3 {
     font-size: 1.4rem;
     color: #333;
-    margin-bottom: 1rem;
+    margin: 1.5rem 0 1rem;
+    font-weight: 500;
 }
 
 .details-section p {
     color: #666;
     line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
 }
 
 .details-section ul {
     list-style: none;
     padding: 0;
-    color: #666;
+    margin: 0;
 }
 
 .details-section li {
-    margin-bottom: 0.5rem;
+    color: #666;
+    padding: 0.5rem 0;
     padding-left: 1.5rem;
     position: relative;
+    line-height: 1.4;
 }
 
 .details-section li::before {
@@ -46,9 +57,21 @@
     color: #333;
 }
 
+.materials, .care {
+    margin-top: 2rem;
+}
+
+.materials h4, .care h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
 @media (max-width: 768px) {
     .product-details {
         margin: 2rem 0;
+        padding: 1.5rem;
     }
 
     .details-section {

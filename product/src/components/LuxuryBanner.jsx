@@ -1,4 +1,5 @@
 import "./LuxuryBanner.css";
+import { Link } from "react-router-dom";
 
 function LuxuryBanner() {
   return (
@@ -6,7 +7,7 @@ function LuxuryBanner() {
       <div className="banner-content">
         <h2>LUXURY FASHION</h2>
         <p>Up to 50% off on selected items</p>
-        <button className="shop-now">Shop Now</button>
+        <Link to="/category/all" className="shop-now">Shop Now</Link>
       </div>
     </section>
   );

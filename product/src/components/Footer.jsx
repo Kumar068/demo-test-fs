@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
@@ -8,16 +9,16 @@ function Footer() {
           <h4>Customer Service</h4>
           <ul>
             <li>
-              <a href="/contact">Contact Us</a>
+              <Link to="/customer-service">Customer Service</Link>
             </li>
             <li>
-              <a href="/shipping">Shipping Information</a>
+              <Link to="/shipping">Shipping Information</Link>
             </li>
             <li>
-              <a href="/returns">Returns & Exchanges</a>
+              <Link to="/returns">Returns & Exchanges</Link>
             </li>
             <li>
-              <a href="/size-guide">Size Guide</a>
+              <Link to="/size-guide">Size Guide</Link>
             </li>
           </ul>
         </div>
@@ -26,16 +27,19 @@ function Footer() {
           <h4>About Us</h4>
           <ul>
             <li>
-              <a href="/story">Our Story</a>
+              <Link to="/about">About Us</Link>
             </li>
             <li>
-              <a href="/careers">Careers</a>
+              <Link to="/our-story">Our Story</Link>
             </li>
             <li>
-              <a href="/locations">Store Locator</a>
+              <Link to="/careers">Careers</Link>
             </li>
             <li>
-              <a href="/sustainability">Sustainability</a>
+              <Link to="/stores">Store Locator</Link>
+            </li>
+            <li>
+              <Link to="/sustainability">Sustainability</Link>
             </li>
           </ul>
         </div>
@@ -43,16 +47,16 @@ function Footer() {
         <div className="footer-section">
           <h4>Follow Us</h4>
           <div className="social-links">
-            <a href="#" className="social-link">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">
               Instagram
             </a>
-            <a href="#" className="social-link">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
               Facebook
             </a>
-            <a href="#" className="social-link">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-link">
               Twitter
             </a>
-            <a href="#" className="social-link">
+            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-link">
               Pinterest
             </a>
           </div>

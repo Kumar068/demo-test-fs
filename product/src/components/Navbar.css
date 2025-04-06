@@ -24,7 +24,7 @@
 
 .logo img {
     height: 100%;
-    width: auto;
+    width: 13%;
     object-fit: contain;
 }
 
@@ -46,21 +46,25 @@
 .nav-actions {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
 }
 
 .icon-button {
     background: none;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
+    color: #333;
     cursor: pointer;
     padding: 0.5rem;
     display: flex;
     align-items: center;
-    color: #333;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .icon-button:hover {
-    color: #666;
+    color: #000;
+    transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
