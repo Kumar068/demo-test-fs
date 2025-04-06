@@ -5,12 +5,14 @@ import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { useCart } from "../context/CartContext";
 
 // Add icons to the library
 library.add(faHeart, faShoppingCart, faUser);
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { getCartCount } = useCart();
 
   return (
     <nav className="navbar">
@@ -32,12 +34,13 @@ function Navbar() {
           <button className="icon-button">
             <FontAwesomeIcon icon={faHeart} />
           </button>
-          <button className="icon-button">
+          <Link to="/cart" className="icon-button cart-button">
             <FontAwesomeIcon icon={faShoppingCart} />
-          </button>
-          <button className="icon-button">
+            {getCartCount() > 0 && <span className="cart-count">{getCartCount()}</span>}
+          </Link>
+          <Link to="/login" className="icon-button">
             <FontAwesomeIcon icon={faUser} />
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

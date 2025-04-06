@@ -124,6 +124,19 @@
 .add-to-cart {
     background: #333;
     color: white;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart.added {
+    background-color: #4CAF50;
+}
+
+.add-to-cart:hover {
+    background: #444;
+}
+
+.add-to-cart.added:hover {
+    background-color: #45a049;
 }
 
 .buy-now {

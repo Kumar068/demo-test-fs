@@ -18,33 +18,40 @@ import ReturnsExchanges from "./pages/info/ReturnsExchanges";
 import SizeGuide from "./pages/info/SizeGuide";
 import Sustainability from "./pages/info/Sustainability";
 import ScrollToTop from "./components/ScrollToTop";
+import Login from "./pages/login/Login";
+import Cart from "./pages/Cart";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="app">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/category/:category" element={<CategoryPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          {/* Info pages routes */}
-          <Route path="/customer-service" element={<CustomerService />} />
-          <Route path="/shipping" element={<ShippingInfo />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/our-story" element={<OurStory />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/stores" element={<StoreLocator />} />
-          <Route path="/returns" element={<ReturnsExchanges />} />
-          <Route path="/size-guide" element={<SizeGuide />} />
-          <Route path="/sustainability" element={<Sustainability />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="app">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/cart" element={<Cart />} />
+            {/* Info pages routes */}
+            <Route path="/customer-service" element={<CustomerService />} />
+            <Route path="/shipping" element={<ShippingInfo />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/our-story" element={<OurStory />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/stores" element={<StoreLocator />} />
+            <Route path="/returns" element={<ReturnsExchanges />} />
+            <Route path="/size-guide" element={<SizeGuide />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 

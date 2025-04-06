@@ -1,6 +1,7 @@
 import "./ProductInfo.css";
 import StarRating from "./StarRating";
-import React from 'react';
+import React, { useState } from 'react';
+import { useCart } from "../../context/CartContext";
 
 function ProductInfo({
   product,
@@ -11,6 +12,9 @@ function ProductInfo({
   quantity,
   setQuantity,
 }) {
+  const { addToCart } = useCart();
+  const [addedToCart, setAddedToCart] = useState(false);
+
   if (!product) return null;
 
   const { 
@@ -22,6 +26,31 @@ function ProductInfo({
     details = {},
     rating = 0 
   } = product;
+
+  const handleAddToCart = () => {
+    if (!selectedSize && sizes.length > 0) {
+      alert("Please select a size");
+      return;
+    }
+    if (!selectedColor && colors.length > 0) {
+      alert("Please select a color");
+      return;
+    }
+
+    const productWithOptions = {
+      ...product,
+      selectedSize,
+      selectedColor,
+    };
+
+    addToCart(productWithOptions, quantity);
+    setAddedToCart(true);
+    
+    // Reset the added to cart message after 2 seconds
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
+  };
 
   return (
     <div className="product-info">
@@ -77,8 +106,8 @@ function ProductInfo({
           </button>
           <span>{quantity}</span>
           <button 
-            onClick={() => setQuantity(Math.min(2, quantity + 1))}
-            disabled={quantity >= 2}
+            onClick={() => setQuantity(Math.min(10, quantity + 1))}
+            disabled={quantity >= 10}
           >
             +
           </button>
@@ -86,11 +115,14 @@ function ProductInfo({
       </div>
 
       <div className="action-buttons">
-        <button className="add-to-cart">Add to Cart</button>
+        <button 
+          className={`add-to-cart ${addedToCart ? 'added' : ''}`}
+          onClick={handleAddToCart}
+        >
+          {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
+        </button>
         <button className="buy-now">Buy Now</button>
       </div>
-
-      
 
       <div className="shipping-info">
         <div className="info-item">

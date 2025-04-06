@@ -24,7 +24,7 @@
 
 .logo img {
     height: 100%;
-    width: 13%;
+    width: 15%;
     object-fit: contain;
 }
 
@@ -60,11 +60,33 @@
     align-items: center;
     justify-content: center;
     transition: color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
 }
 
 .icon-button:hover {
     color: #000;
     transform: scale(1.1);
+}
+
+.cart-button {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e53935;
+    color: white;
+    font-size: 0.75rem;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    font-weight: 500;
 }
 
 @media (max-width: 768px) {
