@@ -43,7 +43,7 @@ function Dashboard() {
                     </div>
                     <div className="item-details">
                       <h3>{item.product.name}</h3>
-                      <p className="item-price">${item.product.price.toFixed(2)}</p>
+                      <p className="item-price">₹{item.product.price.toFixed(2)}</p>
                       {item.product.selectedSize && <p>Size: {item.product.selectedSize}</p>}
                       {item.product.selectedColor && (
                         <div className="color-info">
@@ -82,7 +82,7 @@ function Dashboard() {
               <div className="cart-summary">
                 <div className="total">
                   <span>Total:</span>
-                  <span>${getCartTotal().toFixed(2)}</span>
+                  <span>₹{getCartTotal().toFixed(2)}</span>
                 </div>
                 <button className="checkout-button">Proceed to Checkout</button>
               </div>

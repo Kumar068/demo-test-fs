@@ -56,7 +56,7 @@ function ProductInfo({
     <div className="product-info">
       <h1>{name}</h1>
       <div className="price-rating">
-        <p className="price">${price?.toFixed(2)}</p>
+        <p className="price">₹{price?.toFixed(2)}</p>
         <StarRating rating={rating || 0} />
       </div>
       <p className="description">{description}</p>

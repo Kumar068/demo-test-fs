@@ -15,7 +15,7 @@ function ProductCard({ product }) {
         </div>
         <div className="product-info">
           <h3>{name}</h3>
-          <p className="price">${price.toFixed(2)}</p>
+          <p className="price">₹{price.toFixed(2)}</p>
           <div className="colors">
             {colors && colors.map((color, index) => (
               <span 

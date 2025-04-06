@@ -53,7 +53,7 @@ function NewArrivals() {
             </div>
             <div className="product-info">
               <h3>{product.name}</h3>
-              <p className="price">${product.price.toFixed(2)}</p>
+              <p className="price">₹{product.price.toFixed(2)}</p>
             </div>
           </Link>
         ))}

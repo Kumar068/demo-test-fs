@@ -34,7 +34,7 @@ function Cart() {
                 <Link to={`/product/${product._id}`} className="item-name">
                   {product.name}
                 </Link>
-                <p className="item-price">${product.price.toFixed(2)}</p>
+                <p className="item-price">₹{product.price.toFixed(2)}</p>
                 <div className="item-actions">
                   <div className="quantity-controls">
                     <button 
@@ -60,7 +60,7 @@ function Cart() {
                 </div>
               </div>
               <div className="item-total">
-                ${(product.price * quantity).toFixed(2)}
+                ₹{(product.price * quantity).toFixed(2)}
               </div>
             </div>
           ))}
@@ -69,7 +69,7 @@ function Cart() {
           <h2>Order Summary</h2>
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>${getCartTotal().toFixed(2)}</span>
+            <span>₹{getCartTotal().toFixed(2)}</span>
           </div>
           <div className="summary-row">
             <span>Shipping</span>
@@ -77,7 +77,7 @@ function Cart() {
           </div>
           <div className="summary-total">
             <span>Total</span>
-            <span>${getCartTotal().toFixed(2)}</span>
+            <span>₹{getCartTotal().toFixed(2)}</span>
           </div>
           <button className="checkout-button">
             Proceed to Checkout
