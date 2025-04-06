@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import './AdminPanel.css';
 
 function AdminPanel() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -121,6 +123,10 @@ function AdminPanel() {
     setShowAddForm(false);
   };
 
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
   if (loading) return <div className="admin-panel">Loading...</div>;
   if (error) return <div className="admin-panel">Error: {error}</div>;
 
@@ -128,12 +134,20 @@ function AdminPanel() {
     <div className="admin-panel">
       <div className="admin-header">
         <h1>Admin Panel</h1>
-        <button 
-          className="add-product-btn"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
-          <FontAwesomeIcon icon={faPlus} /> Add New Product
-        </button>
+        <div className="admin-actions">
+          <button 
+            className="add-product-btn"
+            onClick={() => setShowAddForm(!showAddForm)}
+          >
+            <FontAwesomeIcon icon={faPlus} /> Add New Product
+          </button>
+          <button 
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {showAddForm && (

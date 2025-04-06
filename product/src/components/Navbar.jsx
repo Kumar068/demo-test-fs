@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 // Add icons to the library
 library.add(faHeart, faShoppingCart, faUser);
@@ -13,6 +14,7 @@ library.add(faHeart, faShoppingCart, faUser);
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const { getCartCount } = useCart();
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <nav className="navbar">
@@ -38,9 +40,16 @@ function Navbar() {
             <FontAwesomeIcon icon={faShoppingCart} />
             {getCartCount() > 0 && <span className="cart-count">{getCartCount()}</span>}
           </Link>
-          <Link to="/login" className="icon-button">
-            <FontAwesomeIcon icon={faUser} />
-          </Link>
+          {isAuthenticated() ? (
+            <Link to="/dashboard" className="user-profile">
+              <span className="user-name">{user.name}</span>
+              <FontAwesomeIcon icon={faUser} />
+            </Link>
+          ) : (
+            <Link to="/login" className="icon-button">
+              <FontAwesomeIcon icon={faUser} />
+            </Link>
+          )}
         </div>
       </div>
     </nav>
