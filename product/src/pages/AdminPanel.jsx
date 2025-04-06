@@ -48,15 +48,28 @@ function AdminPanel() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Format the data before sending
     const productData = {
       ...formData,
-      colors: formData.colors.split(',').map(color => color.trim()),
-      sizes: formData.sizes.split(',').map(size => size.trim()),
-      price: parseFloat(formData.price)
+      price: parseFloat(formData.price), // Convert price to number
+      colors: formData.colors.split(',').map(color => color.trim()), // Convert colors string to array
+      sizes: formData.sizes.split(',').map(size => size.trim().toUpperCase()), // Convert sizes to uppercase
+      rating: 0, // Add default rating
+      reviews: [] // Add empty reviews array
     };
 
+    // Validate sizes
+    const validSizes = ['XS', 'S', 'M', 'L', 'XL'];
+    const invalidSizes = productData.sizes.filter(size => !validSizes.includes(size));
+    
+    if (invalidSizes.length > 0) {
+      setError(`Invalid sizes: ${invalidSizes.join(', ')}. Valid sizes are: ${validSizes.join(', ')}`);
+      return;
+    }
+
     try {
-      const url = editingProduct 
+      const url = editingProduct
         ? `http://localhost:5000/api/products/${editingProduct._id}`
         : 'http://localhost:5000/api/products';
       
@@ -70,8 +83,11 @@ function AdminPanel() {
         body: JSON.stringify(productData),
       });
 
-      if (!response.ok) throw new Error('Failed to save product');
-      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to save product');
+      }
+
       await fetchProducts();
       resetForm();
     } catch (err) {
