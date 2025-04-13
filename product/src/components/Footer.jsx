@@ -67,10 +67,6 @@ function Footer() {
           <p>
             Subscribe to receive updates, access to exclusive deals, and more.
           </p>
-          <div className="newsletter-form">
-            <input type="email" placeholder="Enter your email" />
-            <button type="submit">→</button>
-          </div>
         </div>
       </div>
 
