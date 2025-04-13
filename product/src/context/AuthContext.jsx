@@ -1,17 +1,12 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  const login = (username, password) => {
-    // For demo purposes, hardcoded credentials
-    if (username === '1234' && password === '1234') {
-      setUser({ username: '1234', name: 'Demo User' });
-      return true;
-    }
-    return false;
+  const login = (userData) => {
+    setUser(userData);
   };
 
   const logout = () => {
@@ -19,20 +14,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAuthenticated = () => {
-    return user !== null;
+    return !!user;
+  };
+
+  const isAdmin = () => {
+    return user?.role === 'admin';
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-}; 
+export function useAuth() {
+  return useContext(AuthContext);
+} 

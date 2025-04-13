@@ -13,8 +13,14 @@ library.add(faHeart, faShoppingCart, faUser);
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
   const { getCartCount } = useCart();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    setShowDropdown(false);
+  };
 
   return (
     <nav className="navbar">
@@ -40,16 +46,38 @@ function Navbar() {
             <FontAwesomeIcon icon={faShoppingCart} />
             {getCartCount() > 0 && <span className="cart-count">{getCartCount()}</span>}
           </Link>
-          {isAuthenticated() ? (
-            <Link to="/dashboard" className="user-profile">
-              <span className="user-name">{user.name}</span>
+          <div className="profile-dropdown">
+            <button 
+              className="icon-button"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
               <FontAwesomeIcon icon={faUser} />
-            </Link>
-          ) : (
-            <Link to="/login" className="icon-button">
-              <FontAwesomeIcon icon={faUser} />
-            </Link>
-          )}
+            </button>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                {isAuthenticated() ? (
+                  <>
+                    <span className="user-info">{user.username}</span>
+                    <Link to="/dashboard" onClick={() => setShowDropdown(false)}>Dashboard</Link>
+                    {user.role === 'admin' ? (
+                      <>
+                        <Link to="/admin" onClick={() => setShowDropdown(false)}>Admin Panel</Link>
+                        <Link to="/user-management" onClick={() => setShowDropdown(false)}>User Management</Link>
+                      </>
+                    ) : (
+                      <Link to="/user-details" onClick={() => setShowDropdown(false)}>My Details</Link>
+                    )}
+                    <button onClick={handleLogout}>Logout</button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setShowDropdown(false)}>User Login</Link>
+                    <Link to="/admin/login" onClick={() => setShowDropdown(false)}>Admin Login</Link>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

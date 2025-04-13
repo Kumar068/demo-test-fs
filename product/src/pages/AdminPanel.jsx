@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import './AdminPanel.css';
+import { useAuth } from '../context/AuthContext';
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function AdminPanel() {
     colors: '',
     sizes: '',
   });
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     fetchProducts();
@@ -52,11 +54,11 @@ function AdminPanel() {
     // Format the data before sending
     const productData = {
       ...formData,
-      price: parseFloat(formData.price), // Convert price to number
-      colors: formData.colors.split(',').map(color => color.trim()), // Convert colors string to array
-      sizes: formData.sizes.split(',').map(size => size.trim().toUpperCase()), // Convert sizes to uppercase
-      rating: 0, // Add default rating
-      reviews: [] // Add empty reviews array
+      price: parseFloat(formData.price),
+      colors: formData.colors.split(',').map(color => color.trim()),
+      sizes: formData.sizes.split(',').map(size => size.trim().toUpperCase()),
+      rating: 0,
+      reviews: []
     };
 
     // Validate sizes
@@ -156,6 +158,12 @@ function AdminPanel() {
             onClick={() => setShowAddForm(!showAddForm)}
           >
             <FontAwesomeIcon icon={faPlus} /> Add New Product
+          </button>
+          <button 
+            className="user-management-btn"
+            onClick={() => navigate('/user-management')}
+          >
+            Manage Users
           </button>
           <button 
             className="logout-btn"
@@ -283,13 +291,13 @@ function AdminPanel() {
                     className="edit-btn"
                     onClick={() => handleEdit(product)}
                   >
-                    <FontAwesomeIcon icon={faEdit} />
+                    Update
                   </button>
                   <button 
                     className="delete-btn"
                     onClick={() => handleDelete(product._id)}
                   >
-                    <FontAwesomeIcon icon={faTrash} />
+                    Delete
                   </button>
                 </td>
               </tr>

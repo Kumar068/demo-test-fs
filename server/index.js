@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const productsRouter = require('./routes/products');
+const authRoutes = require('./routes/auth');
 const Product = require('./models/Product');
 
 // Load environment variables
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 app.use('/api/products', productsRouter);
+app.use('/api/auth', authRoutes);
 
 app.get('/api/products', async (req, res) => {
   try {

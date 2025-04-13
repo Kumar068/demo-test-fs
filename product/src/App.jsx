@@ -23,6 +23,9 @@ import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import UserLogin from './pages/auth/UserLogin';
+import AdminLogin from './pages/auth/AdminLogin';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
@@ -36,9 +39,11 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/category/:category" element={<CategoryPage />} />
               <Route path="/product/:id" element={<ProductPage />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<UserLogin />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/user-management" element={<UserManagement />} />
               <Route path="/cart" element={<Cart />} />
               {/* Info pages routes */}
               <Route path="/customer-service" element={<CustomerService />} />
