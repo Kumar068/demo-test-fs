@@ -44,7 +44,7 @@ function UserLogin() {
       }
 
       if (isLogin) {
-        login({ username: formData.username, role: 'user' });
+        login(data.user);
         navigate('/');
       } else {
         setIsLogin(true);

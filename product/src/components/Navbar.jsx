@@ -59,14 +59,13 @@ function Navbar() {
                   <>
                     <span className="user-info">{user.username}</span>
                     <Link to="/dashboard" onClick={() => setShowDropdown(false)}>Dashboard</Link>
+                    <Link to="/orders" onClick={() => setShowDropdown(false)}>My Orders</Link>
                     {user.role === 'admin' ? (
                       <>
                         <Link to="/admin" onClick={() => setShowDropdown(false)}>Admin Panel</Link>
                         <Link to="/user-management" onClick={() => setShowDropdown(false)}>User Management</Link>
                       </>
-                    ) : (
-                      <Link to="/user-details" onClick={() => setShowDropdown(false)}>My Details</Link>
-                    )}
+                    ) : null}
                     <button onClick={handleLogout}>Logout</button>
                   </>
                 ) : (

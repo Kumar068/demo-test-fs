@@ -21,6 +21,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import UserLogin from './pages/auth/UserLogin';
@@ -45,6 +46,7 @@ function App() {
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/user-management" element={<UserManagement />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<Orders />} />
               {/* Info pages routes */}
               <Route path="/customer-service" element={<CustomerService />} />
               <Route path="/shipping" element={<ShippingInfo />} />

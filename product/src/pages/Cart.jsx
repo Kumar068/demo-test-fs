@@ -1,12 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import './Cart.css';
 
+// Create an axios instance with the base URL
+const api = axios.create({
+  baseURL: 'http://localhost:5000'
+});
+
 function Cart() {
-  const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleCheckout = async () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      setIsProcessing(true);
+      setError(null);
+
+      const orderData = {
+        items: cartItems.map(item => ({
+          product: item.product._id,
+          quantity: item.quantity,
+          price: item.product.price,
+          selectedSize: item.product.selectedSize,
+          selectedColor: item.product.selectedColor
+        })),
+        totalAmount: getCartTotal(),
+        shippingAddress: {
+          street: "Default Street",
+          city: "Default City",
+          state: "Default State",
+          zipCode: "12345",
+          country: "Default Country"
+        }
+      };
+
+      const response = await api.post('/api/orders', orderData, {
+        headers: {
+          'X-User-Id': user.id,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.status === 201) {
+        clearCart();
+        navigate('/orders');
+      }
+    } catch (err) {
+      setError('Failed to create order. Please try again.');
+      console.error('Checkout error:', err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -75,13 +133,23 @@ function Cart() {
             <span>Shipping</span>
             <span>Free</span>
           </div>
+          <div className="summary-row">
+            <span>Payment Method</span>
+            <span>Cash on Delivery</span>
+          </div>
           <div className="summary-total">
             <span>Total</span>
             <span>₹{getCartTotal().toFixed(2)}</span>
           </div>
-          <button className="checkout-button">
-            Proceed to Checkout
-          </button><br/><br/>
+          {error && <div className="error-message">{error}</div>}
+          <button 
+            className="checkout-button"
+            onClick={handleCheckout}
+            disabled={isProcessing}
+          >
+            {isProcessing ? 'Processing...' : 'Proceed to Checkout (COD)'}
+          </button>
+          <br/><br/>
           <Link to="/" className="continue-shopping">
             Continue Shopping
           </Link>

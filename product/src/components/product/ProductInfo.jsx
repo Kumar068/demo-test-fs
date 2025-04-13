@@ -121,7 +121,6 @@ function ProductInfo({
         >
           {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
         </button>
-        <button className="buy-now">Buy Now</button>
       </div>
 
       <div className="shipping-info">
