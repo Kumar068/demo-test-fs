@@ -42,11 +42,11 @@ function AdminLogin() {
         throw new Error(data.message || 'Authentication failed');
       }
 
-      if (data.role !== 'admin') {
-        throw new Error('Unauthorized access');
+      if (data.user.role !== 'admin') {
+        throw new Error('Unauthorized access. Admin privileges required.');
       }
 
-      login({ username: formData.username, role: 'admin' });
+      login(data.user);
       navigate('/admin');
     } catch (err) {
       setError(err.message);
@@ -65,7 +65,7 @@ function AdminLogin() {
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="Username"
+              placeholder="Admin Username"
               required
             />
           </div>
@@ -75,11 +75,11 @@ function AdminLogin() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Password"
+              placeholder="Admin Password"
               required
             />
           </div>
-          <button type="submit" className="auth-button">Login</button>
+          <button type="submit" className="auth-button">Login as Admin</button>
         </form>
       </div>
     </div>
