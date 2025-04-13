@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./CategoryPage.css";
 import ProductCard from "../components/product/ProductCard";
@@ -6,18 +6,50 @@ import { getProducts } from "../services/api";
 
 function CategoryPage() {
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
+  const style = searchParams.get('style');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const filterProductsByStyle = (products, style) => {
+    if (!style) return products;
+
+    const styleKeywords = {
+      casual: ['casual', 'everyday', 'comfortable', 'relaxed', 'basic', 'simple', 't-shirt', 'jeans', 'cotton'],
+      formal: ['formal', 'elegant', 'business', 'suit', 'professional', 'dress', 'oxford', 'blazer'],
+      athletic: ['athletic', 'sport', 'active', 'workout', 'running', 'gym', 'training', 'performance', 'yoga', 'compression']
+    };
+
+    const keywords = styleKeywords[style.toLowerCase()] || [];
+    console.log('Filtering by style:', style);
+    console.log('Using keywords:', keywords);
+    console.log('Total products before filtering:', products.length);
+    
+    const filteredProducts = products.filter(product => {
+      const searchText = `${product.name} ${product.description} ${product.details?.description || ''}`.toLowerCase();
+      const matches = keywords.some(keyword => searchText.includes(keyword));
+      if (matches) {
+        console.log('Matched product:', product.name);
+      }
+      return matches;
+    });
+
+    console.log('Filtered products count:', filteredProducts.length);
+    return filteredProducts;
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        // If category is 'all', don't pass a category parameter to get all products
+        console.log('Fetching products for category:', category);
         const data = await getProducts(category === 'all' ? null : category);
-        console.log('Fetched products:', data);
-        setProducts(data);
+        console.log('Received products from API:', data);
+        // Filter by style on the frontend
+        const filteredData = filterProductsByStyle(data, style);
+        console.log('Final filtered products:', filteredData);
+        setProducts(filteredData);
         setError(null);
       } catch (err) {
         setError('Failed to fetch products');
@@ -28,7 +60,7 @@ function CategoryPage() {
     };
 
     fetchProducts();
-  }, [category]);
+  }, [category, style]);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -38,10 +70,18 @@ function CategoryPage() {
     return <div className="error">{error}</div>;
   }
 
+  const pageTitle = () => {
+    let title = category === 'all' ? 'All Products' : category.charAt(0).toUpperCase() + category.slice(1);
+    if (style) {
+      title = `${style.charAt(0).toUpperCase() + style.slice(1)} ${title}`;
+    }
+    return title;
+  };
+
   return (
     <div className="category-page">
       <header className="category-header">
-        <h1>{category === 'all' ? 'All Products' : category.charAt(0).toUpperCase() + category.slice(1)}</h1>
+        <h1>{pageTitle()}</h1>
         <p>{products.length} Products</p>
       </header>
       <div className="product-grid">

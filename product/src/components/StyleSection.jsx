@@ -15,7 +15,7 @@ function StyleSection() {
         {styles.map((style) => (
           <Link 
             key={style.title} 
-            to="/category/all" 
+            to={`/category/all?style=${style.title.toLowerCase()}`}
             className="style-card"
           >
             <div

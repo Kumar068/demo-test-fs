@@ -201,6 +201,106 @@ const products = [
       materials: ["Full-grain Leather", "Cotton Lining", "Metal Hardware"],
       care: ["Clean with leather cleaner", "Store in dust bag", "Avoid direct sunlight"]
     }
+  },
+  {
+    name: "Performance Running Shorts",
+    description: "High-performance athletic shorts for running and training",
+    price: 45.0,
+    category: "men",
+    imageUrl: "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?q=80&w=1000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1597075687491-8f673c6c17f7?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1597075687492-8f673c6c17f8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1597075687493-8f673c6c17f9?q=80&w=1000&auto=format&fit=crop"
+    ],
+    colors: ["black", "navy", "grey"],
+    sizes: ["S", "M", "L", "XL"],
+    details: {
+      description: "Lightweight, breathable running shorts with built-in liner. Perfect for intense workouts and long-distance running.",
+      materials: ["88% Polyester", "12% Spandex"],
+      care: ["Machine wash cold", "Tumble dry low", "Do not bleach"]
+    }
+  },
+  {
+    name: "Women's Yoga Leggings",
+    description: "High-waisted athletic leggings for yoga and workout",
+    price: 78.0,
+    category: "women",
+    imageUrl: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=1000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506629082956-511b1aa562c9?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506629082957-511b1aa562ca?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1506629082958-511b1aa562cb?q=80&w=1000&auto=format&fit=crop"
+    ],
+    colors: ["black", "navy", "burgundy"],
+    sizes: ["XS", "S", "M", "L"],
+    details: {
+      description: "High-performance yoga leggings with moisture-wicking fabric and four-way stretch. Perfect for any workout.",
+      materials: ["75% Nylon", "25% Spandex"],
+      care: ["Machine wash cold", "Hang dry", "Do not bleach"]
+    }
+  },
+  {
+    name: "Performance Training Tank",
+    description: "Breathable athletic tank top for intense workouts",
+    price: 35.0,
+    category: "women",
+    imageUrl: "https://images.unsplash.com/photo-1518310532637-0af53a1f7830?q=80&w=1000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1518310532637-0af53a1f7830?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518310532638-0af53a1f7831?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518310532639-0af53a1f7832?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518310532640-0af53a1f7833?q=80&w=1000&auto=format&fit=crop"
+    ],
+    colors: ["white", "black", "pink"],
+    sizes: ["XS", "S", "M", "L"],
+    details: {
+      description: "Lightweight and breathable training tank with moisture-wicking technology. Perfect for high-intensity workouts.",
+      materials: ["92% Polyester", "8% Spandex"],
+      care: ["Machine wash cold", "Tumble dry low", "Do not bleach"]
+    }
+  },
+  {
+    name: "Kids Sport Shorts",
+    description: "Comfortable athletic shorts for active kids",
+    price: 28.0,
+    category: "kids",
+    imageUrl: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?q=80&w=1000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503944583221-79d8926ad5e3?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503944583222-79d8926ad5e4?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503944583223-79d8926ad5e5?q=80&w=1000&auto=format&fit=crop"
+    ],
+    colors: ["navy", "red", "black"],
+    sizes: ["S", "M", "L"],
+    details: {
+      description: "Durable and comfortable sports shorts designed for active kids. Features quick-dry fabric and elastic waistband.",
+      materials: ["100% Polyester"],
+      care: ["Machine wash cold", "Tumble dry low", "Do not bleach"]
+    }
+  },
+  {
+    name: "Compression Fitness Top",
+    description: "Athletic compression top for enhanced performance",
+    price: 55.0,
+    category: "men",
+    imageUrl: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517838277537-f5f99be501ce?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517838277538-f5f99be501cf?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517838277539-f5f99be501d0?q=80&w=1000&auto=format&fit=crop"
+    ],
+    colors: ["black", "grey", "blue"],
+    sizes: ["S", "M", "L", "XL"],
+    details: {
+      description: "High-performance compression top with moisture-wicking technology. Provides muscle support during intense workouts.",
+      materials: ["80% Nylon", "20% Spandex"],
+      care: ["Machine wash cold", "Hang dry", "Do not bleach"]
+    }
   }
 ];
 

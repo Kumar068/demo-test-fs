@@ -1,8 +1,22 @@
 const API_URL = 'http://localhost:5000/api';
 
-export const getProducts = async (category) => {
+export const getProducts = async (category, style) => {
   try {
-    const url = category ? `${API_URL}/products?category=${category}` : `${API_URL}/products`;
+    let url = `${API_URL}/products`;
+    const params = new URLSearchParams();
+    
+    if (category && category !== 'all') {
+      params.append('category', category);
+    }
+    if (style) {
+      params.append('style', style);
+    }
+    
+    const queryString = params.toString();
+    if (queryString) {
+      url += `?${queryString}`;
+    }
+    
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
