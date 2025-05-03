@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const orderItemSchema = new mongoose.Schema({
+const orderItemSchema = new Schema({
   product: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Product',
     required: true
   },
@@ -15,13 +16,25 @@ const orderItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  selectedSize: String,
-  selectedColor: String
+  selectedSize: {
+    type: String
+  },
+  selectedColor: {
+    type: String
+  }
 });
 
-const orderSchema = new mongoose.Schema({
+const addressSchema = new Schema({
+  street: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  zipCode: { type: String, required: true },
+  country: { type: String, required: true }
+});
+
+const orderSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
@@ -37,20 +50,13 @@ const orderSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['COD'],
-    default: 'COD'
+    default: 'Cash on Delivery'
   },
-  shippingAddress: {
-    street: String,
-    city: String,
-    state: String,
-    zipCode: String,
-    country: String
-  },
+  shippingAddress: addressSchema,
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-module.exports = mongoose.model('Order', orderSchema); 
+module.exports = mongoose.model('Order', orderSchema);

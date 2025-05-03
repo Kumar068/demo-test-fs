@@ -21,7 +21,6 @@ function ProductInfo({
     name, 
     price, 
     description, 
-    colors = [], 
     sizes = [], 
     details = {},
     rating = 0 
@@ -32,15 +31,10 @@ function ProductInfo({
       alert("Please select a size");
       return;
     }
-    if (!selectedColor && colors.length > 0) {
-      alert("Please select a color");
-      return;
-    }
 
     const productWithOptions = {
       ...product,
       selectedSize,
-      selectedColor,
     };
 
     addToCart(productWithOptions, quantity);
@@ -61,23 +55,6 @@ function ProductInfo({
       </div>
       <p className="description">{description}</p>
       
-      {colors.length > 0 && (
-        <div className="colors-section">
-          <h3>Available Colors</h3>
-          <div className="colors">
-            {colors.map((color, index) => (
-              <span
-                key={`color-${color}-${index}`}
-                className={`color-dot ${color === selectedColor ? 'selected' : ''}`}
-                style={{ backgroundColor: color }}
-                title={color}
-                onClick={() => setSelectedColor(color)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {sizes.length > 0 && (
         <div className="sizes-section">
           <h3>Available Sizes</h3>

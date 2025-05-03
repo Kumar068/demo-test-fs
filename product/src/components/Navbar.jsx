@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShoppingCart, faUser, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
 // Add icons to the library
-library.add(faHeart, faShoppingCart, faUser);
+library.add(faHeart, faShoppingCart, faUser, faLocationDot);
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,6 +59,10 @@ function Navbar() {
                   <>
                     <span className="user-info">{user.username}</span>
                     <Link to="/dashboard" onClick={() => setShowDropdown(false)}>Dashboard</Link>
+                    <Link to="/shipping-address" onClick={() => setShowDropdown(false)}>
+                      <FontAwesomeIcon icon={faLocationDot} className="menu-icon" /> 
+                      Shipping Address
+                    </Link>
                     <Link to="/orders" onClick={() => setShowDropdown(false)}>My Orders</Link>
                     {user.role === 'admin' ? (
                       <>

@@ -49,7 +49,6 @@ function Dashboard() {
                         <div className="color-info">
                           <span>Color:</span>
                           <span
-                            className="color-dot"
                             style={{ backgroundColor: item.product.selectedColor }}
                           />
                         </div>

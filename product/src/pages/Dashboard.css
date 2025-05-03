@@ -97,13 +97,6 @@
   gap: 0.5rem;
 }
 
-.color-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
-
 .quantity-controls {
   display: flex;
   align-items: center;

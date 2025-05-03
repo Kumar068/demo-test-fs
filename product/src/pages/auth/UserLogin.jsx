@@ -1,38 +1,61 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { validatePassword } from '../../utils/validation';
 import './Auth.css';
 
 function UserLogin() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
+    password: '',
+    name: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: ''
+    }
   });
   const [error, setError] = useState('');
+  const [passwordErrors, setPasswordErrors] = useState([]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+
+    if (e.target.name === 'password') {
+      const { errors } = validatePassword(e.target.value);
+      setPasswordErrors(errors);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
+    if (isSignup) {
+      const { isValid, errors } = validatePassword(formData.password);
+      if (!isValid) {
+        setPasswordErrors(errors);
+        return;
+      }
+    }
+
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/${isLogin ? 'login' : 'register'}`, {
+      const endpoint = isSignup ? 'register' : 'login';
+      const response = await fetch(`http://localhost:5000/api/auth/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
+          ...formData,
           role: 'user'
         }),
       });
@@ -43,14 +66,8 @@ function UserLogin() {
         throw new Error(data.message || 'Authentication failed');
       }
 
-      if (isLogin) {
-        login(data.user);
-        navigate('/');
-      } else {
-        setIsLogin(true);
-        setError('Registration successful! Please login.');
-        setFormData({ username: '', password: '' });
-      }
+      login(data.user);
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
@@ -59,9 +76,77 @@ function UserLogin() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>{isLogin ? 'User Login' : 'User Signup'}</h1>
+        <div className="auth-toggle">
+          <Link to="/login" className="toggle-button active">User Login</Link>
+          <Link to="/admin/login" className="toggle-button">Admin Login</Link>
+        </div>
+        <h1>{isSignup ? 'Sign Up' : 'Login'}</h1>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit} className="auth-form">
+          {isSignup && (
+            <>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Full Name"
+                  required={isSignup}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="address.street"
+                  value={formData.address.street}
+                  onChange={handleChange}
+                  placeholder="Street Address"
+                  required={isSignup}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="address.city"
+                  value={formData.address.city}
+                  onChange={handleChange}
+                  placeholder="City"
+                  required={isSignup}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="address.state"
+                  value={formData.address.state}
+                  onChange={handleChange}
+                  placeholder="State"
+                  required={isSignup}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="address.zipCode"
+                  value={formData.address.zipCode}
+                  onChange={handleChange}
+                  placeholder="ZIP Code"
+                  required={isSignup}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="address.country"
+                  value={formData.address.country}
+                  onChange={handleChange}
+                  placeholder="Country"
+                  required={isSignup}
+                />
+              </div>
+            </>
+          )}
           <div className="form-group">
             <input
               type="text"
@@ -81,17 +166,29 @@ function UserLogin() {
               placeholder="Password"
               required
             />
+            {isSignup && passwordErrors.length > 0 && (
+              <div className="password-requirements">
+                {passwordErrors.map((error, index) => (
+                  <p key={index} className="requirement-error">{error}</p>
+                ))}
+              </div>
+            )}
           </div>
           <button type="submit" className="auth-button">
-            {isLogin ? 'Login' : 'Sign Up'}
+            {isSignup ? 'Sign Up' : 'Login'}
           </button>
         </form>
         <div className="auth-switch">
-          <button 
-            className="switch-button" 
-            onClick={() => setIsLogin(!isLogin)}
+          <button
+            className="switch-button"
+            onClick={() => {
+              setIsSignup(!isSignup);
+              setError('');
+              setPasswordErrors([]);
+              setFormData({ username: '', password: '', name: '' });
+            }}
           >
-            {isLogin ? 'Need an account? Sign up' : 'Already have an account? Login'}
+            {isSignup ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
           </button>
         </div>
       </div>
@@ -99,4 +196,4 @@ function UserLogin() {
   );
 }
 
-export default UserLogin; 
+export default UserLogin;

@@ -18,7 +18,6 @@ function AdminPanel() {
     price: '',
     category: '',
     imageUrl: '',
-    colors: '',
     sizes: '',
   });
   const { isAdmin } = useAuth();
@@ -55,7 +54,6 @@ function AdminPanel() {
     const productData = {
       ...formData,
       price: parseFloat(formData.price),
-      colors: formData.colors.split(',').map(color => color.trim()),
       sizes: formData.sizes.split(',').map(size => size.trim().toUpperCase()),
       rating: 0,
       reviews: []
@@ -105,7 +103,6 @@ function AdminPanel() {
       price: product.price.toString(),
       category: product.category,
       imageUrl: product.imageUrl,
-      colors: product.colors.join(', '),
       sizes: product.sizes.join(', '),
     });
     setShowAddForm(true);
@@ -134,7 +131,6 @@ function AdminPanel() {
       price: '',
       category: '',
       imageUrl: '',
-      colors: '',
       sizes: '',
     });
     setEditingProduct(null);
@@ -234,16 +230,6 @@ function AdminPanel() {
           <div className="form-group">
             <input
               type="text"
-              name="colors"
-              value={formData.colors}
-              onChange={handleInputChange}
-              placeholder="Colors (comma-separated)"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
               name="sizes"
               value={formData.sizes}
               onChange={handleInputChange}
@@ -309,4 +295,4 @@ function AdminPanel() {
   );
 }
 
-export default AdminPanel; 
+export default AdminPanel;

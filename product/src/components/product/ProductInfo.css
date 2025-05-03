@@ -179,32 +179,18 @@
     align-items: center;
 }
 
-.color-dot {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid #e0e0e0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
+.sizes-section {
+    margin: 1.5rem 0;
 }
 
-.color-dot:hover {
-    transform: scale(1.1);
+.sizes-section h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.75rem;
 }
 
-.color-dot.selected {
-    border-color: #333;
-    transform: scale(1.1);
-}
-
-.color-dot.selected::after {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid #333;
-    border-radius: 50%;
+.sizes {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
 }

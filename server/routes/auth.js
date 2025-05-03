@@ -1,55 +1,57 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
-// Create initial admin user if none exists
-const createAdminUser = async () => {
-  try {
-    const adminExists = await User.findOne({ role: 'admin' });
-    if (!adminExists) {
-      const adminUser = new User({
-        username: 'admin',
-        password: 'admin123',  // You should change this in production
-        role: 'admin'
-      });
-      await adminUser.save();
-      console.log('Admin user created successfully');
-    }
-  } catch (error) {
-    console.error('Error creating admin user:', error);
-  }
-};
-
-// Call this function when the server starts
-createAdminUser();
+const { auth, adminAuth } = require('../middleware/auth');
 
 // Register a new user
 router.post('/register', async (req, res) => {
   try {
-    const { username, password, role } = req.body;
+    const { username, password, name, role, address } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Username already exists' });
+    let user = await User.findOne({ username });
+    if (user) {
+      return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Only allow user role for registration
-    if (role === 'admin') {
-      return res.status(403).json({ message: 'Cannot register as admin' });
-    }
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const user = new User({
+    user = new User({
       username,
-      password,
-      role: 'user'
+      password: hashedPassword,
+      name,
+      role: role || 'user',
+      address
     });
 
     await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
+
+    // Create JWT token
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '7d' }
+    );
+
+    // Return user and token
+    res.status(201).json({
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,
+        name: user.name,
+        role: user.role,
+        address: user.address
+      }
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering user' });
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -61,49 +63,106 @@ router.post('/login', async (req, res) => {
     // Find user
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Check if role matches (if specified)
+    if (role && user.role !== role) {
+      return res.status(403).json({ message: 'Unauthorized access. Role mismatch.' });
     }
 
     // Check password
-    if (password !== user.password) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // For admin login attempts, verify role
-    if (role === 'admin' && user.role !== 'admin') {
-      return res.status(403).json({ message: 'Unauthorized access. Admin privileges required.' });
-    }
+    // Create JWT token
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '7d' }
+    );
 
+    // Return user and token
     res.json({
+      token,
       user: {
-        id: user._id,
+        _id: user._id,
         username: user.username,
-        role: user.role
+        name: user.name,
+        role: user.role,
+        address: user.address
       }
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in' });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
 // Get all users (admin only)
-router.get('/users', async (req, res) => {
+router.get('/users', adminAuth, async (req, res) => {
   try {
-    const users = await User.find({}, { password: 0 });
+    const users = await User.find().select('-password');
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching users' });
+    console.error('Get users error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
 // Delete user (admin only)
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', adminAuth, async (req, res) => {
   try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting user' });
+    console.error('Delete user error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
-module.exports = router; 
+// Get current user
+router.get('/me', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    res.json(user);
+  } catch (error) {
+    console.error('Get current user error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update user address
+router.put('/users/:id/address', auth, async (req, res) => {
+  try {
+    // Check if user is updating their own address or is an admin
+    if (req.user._id.toString() !== req.params.id && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to update this address' });
+    }
+
+    const { address } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { address },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error('Update address error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+module.exports = router;

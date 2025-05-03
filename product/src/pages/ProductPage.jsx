@@ -12,26 +12,25 @@ function ProductPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const fetchProduct = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getProduct(id);
+      setProduct(data);
+    } catch (err) {
+      console.error('Error:', err);
+      setError('Failed to load product. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const data = await getProduct(id);
-        setProduct(data);
-        setSelectedColor(data.colors[0]);
-        setError(null);
-      } catch (err) {
-        setError('Failed to fetch product');
-        console.error('Error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProduct();
   }, [id]);
 

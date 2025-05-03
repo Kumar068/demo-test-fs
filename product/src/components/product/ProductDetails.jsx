@@ -1,31 +1,43 @@
-import "./ProductDetails.css";
+import React from 'react';
+import './ProductDetails.css';
 
 function ProductDetails({ details }) {
-  return (
-    <section className="product-details">
-      <div className="details-section">
+  // Add a check to handle undefined details
+  if (!details) {
+    return (
+      <div className="product-details">
         <h2>Product Details</h2>
-        <p>{details.description}</p>
+        <p>No additional details available for this product.</p>
       </div>
+    );
+  }
 
-      <div className="details-section">
-        <h3>Materials</h3>
-        <ul>
-          {details.materials.map((material, index) => (
-            <li key={index}>{material}</li>
-          ))}
-        </ul>
+  return (
+    <div className="product-details">
+      <h2>Product Details</h2>
+      <div className="details-content">
+        {details.description && (
+          <div className="detail-section">
+            <h3>Description</h3>
+            <p>{details.description}</p>
+          </div>
+        )}
+        
+        {details.material && (
+          <div className="detail-section">
+            <h3>Material</h3>
+            <p>{details.material}</p>
+          </div>
+        )}
+        
+        {details.care && (
+          <div className="detail-section">
+            <h3>Care Instructions</h3>
+            <p>{details.care}</p>
+          </div>
+        )}
       </div>
-
-      <div className="details-section">
-        <h3>Care Instructions</h3>
-        <ul>
-          {details.care.map((instruction, index) => (
-            <li key={index}>{instruction}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
+    </div>
   );
 }
 

@@ -46,10 +46,3 @@
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
-
-.color-dot {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-} 

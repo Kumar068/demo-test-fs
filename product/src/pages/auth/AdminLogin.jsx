@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { validatePassword } from '../../utils/validation';
 import './Auth.css';
 
 function AdminLogin() {
@@ -11,17 +12,29 @@ function AdminLogin() {
     password: ''
   });
   const [error, setError] = useState('');
+  const [passwordErrors, setPasswordErrors] = useState([]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+
+    if (e.target.name === 'password') {
+      const { errors } = validatePassword(e.target.value);
+      setPasswordErrors(errors);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    const { isValid, errors } = validatePassword(formData.password);
+    if (!isValid) {
+      setPasswordErrors(errors);
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -56,6 +69,10 @@ function AdminLogin() {
   return (
     <div className="auth-container">
       <div className="auth-box">
+        <div className="auth-toggle">
+          <Link to="/login" className="toggle-button">User Login</Link>
+          <Link to="/admin/login" className="toggle-button active">Admin Login</Link>
+        </div>
         <h1>Admin Login</h1>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit} className="auth-form">
@@ -78,6 +95,13 @@ function AdminLogin() {
               placeholder="Admin Password"
               required
             />
+            {passwordErrors.length > 0 && (
+              <div className="password-requirements">
+                {passwordErrors.map((error, index) => (
+                  <p key={index} className="requirement-error">{error}</p>
+                ))}
+              </div>
+            )}
           </div>
           <button type="submit" className="auth-button">Login as Admin</button>
         </form>
@@ -86,4 +110,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin; 
+export default AdminLogin;

@@ -1,9 +1,31 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const productSchema = new mongoose.Schema({
+const reviewSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  comment: {
+    type: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const productSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   description: {
     type: String,
@@ -11,7 +33,8 @@ const productSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   category: {
     type: String,
@@ -20,43 +43,21 @@ const productSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
-    validate: {
-      validator: function(v) {
-        return /^https?:\/\/.+/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`
-    }
+    required: true
   },
-  images: [{
-    type: String,
-    validate: {
-      validator: function(v) {
-        return /^https?:\/\/.+/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`
-    }
-  }],
-  colors: [{
-    type: String
-  }],
-  sizes: [{
-    type: String,
-    enum: ['XS', 'S', 'M', 'L', 'XL']
-  }],
-  details: {
-    description: String,
-    materials: [String],
-    care: [String]
+  sizes: {
+    type: [String],
+    required: true
   },
-  inStock: {
-    type: Boolean,
-    default: true
+  rating: {
+    type: Number,
+    default: 0
   },
+  reviews: [reviewSchema],
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-module.exports = mongoose.model('Product', productSchema); 
+module.exports = mongoose.model('Product', productSchema);

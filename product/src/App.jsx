@@ -27,6 +27,7 @@ import { AuthProvider } from "./context/AuthContext";
 import UserLogin from './pages/auth/UserLogin';
 import AdminLogin from './pages/auth/AdminLogin';
 import UserManagement from './pages/UserManagement';
+import ShippingAddress from "./components/user/ShippingAddress";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
               {/* Info pages routes */}
               <Route path="/customer-service" element={<CustomerService />} />
               <Route path="/shipping" element={<ShippingInfo />} />
+              <Route path="/shipping-address" element={<ShippingAddress />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/our-story" element={<OurStory />} />
               <Route path="/careers" element={<Careers />} />
