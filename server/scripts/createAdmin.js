@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
-// Load environment variables
-dotenv.config();
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion-store', {
+// Connect to MongoDB - only use ONE connection
+mongoose.connect('mongodb://username:password@127.0.0.1:27017/ecommerce', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  connectTimeoutMS: 10000,
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => {
@@ -20,24 +18,25 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion-s
 const createAdmin = async () => {
   try {
     // Check if admin already exists
-    const adminExists = await User.findOne({ username: 'admin' });
+    const adminExists = await User.findOne({ username: 'admin1' });
     
     if (adminExists) {
       console.log('Admin user already exists');
       process.exit(0);
     }
 
-    // Create admin user
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('admin123', salt);
+    const hashedPassword = await bcrypt.hash('Admin@123', salt);
     
+    // Create admin user
     const admin = new User({
-      username: 'admin',
+      username: 'admin1',
       password: hashedPassword,
       name: 'Admin User',
       role: 'admin',
       address: {
-        street: '123 Admin St',
+        street: 'Admin Street',
         city: 'Admin City',
         state: 'Admin State',
         zipCode: '12345',

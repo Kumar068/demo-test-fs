@@ -80,7 +80,7 @@ const products = [
 const users = [
   {
     username: 'admin',
-    password: 'admin123',
+    password: 'Admin@123',
     name: 'Admin User',
     role: 'admin',
     address: {

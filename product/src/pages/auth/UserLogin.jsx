@@ -24,13 +24,28 @@ function UserLogin() {
   const [passwordErrors, setPasswordErrors] = useState([]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    
+    // Handle nested address fields
+    if (name.startsWith('address.')) {
+      const addressField = name.split('.')[1];
+      setFormData({
+        ...formData,
+        address: {
+          ...formData.address,
+          [addressField]: value
+        }
+      });
+    } else {
+      // Handle regular fields
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
 
-    if (e.target.name === 'password') {
-      const { errors } = validatePassword(e.target.value);
+    if (name === 'password') {
+      const { errors } = validatePassword(value);
       setPasswordErrors(errors);
     }
   };
@@ -73,6 +88,24 @@ function UserLogin() {
     }
   };
 
+  const resetForm = () => {
+    setIsSignup(!isSignup);
+    setError('');
+    setPasswordErrors([]);
+    setFormData({
+      username: '',
+      password: '',
+      name: '',
+      address: {
+        street: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: ''
+      }
+    });
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-box">
@@ -99,7 +132,7 @@ function UserLogin() {
                 <input
                   type="text"
                   name="address.street"
-                  value={formData.address.street}
+                  value={formData.address?.street || ''}
                   onChange={handleChange}
                   placeholder="Street Address"
                   required={isSignup}
@@ -109,7 +142,7 @@ function UserLogin() {
                 <input
                   type="text"
                   name="address.city"
-                  value={formData.address.city}
+                  value={formData.address?.city || ''}
                   onChange={handleChange}
                   placeholder="City"
                   required={isSignup}
@@ -119,7 +152,7 @@ function UserLogin() {
                 <input
                   type="text"
                   name="address.state"
-                  value={formData.address.state}
+                  value={formData.address?.state || ''}
                   onChange={handleChange}
                   placeholder="State"
                   required={isSignup}
@@ -129,7 +162,7 @@ function UserLogin() {
                 <input
                   type="text"
                   name="address.zipCode"
-                  value={formData.address.zipCode}
+                  value={formData.address?.zipCode || ''}
                   onChange={handleChange}
                   placeholder="ZIP Code"
                   required={isSignup}
@@ -139,7 +172,7 @@ function UserLogin() {
                 <input
                   type="text"
                   name="address.country"
-                  value={formData.address.country}
+                  value={formData.address?.country || ''}
                   onChange={handleChange}
                   placeholder="Country"
                   required={isSignup}
@@ -181,12 +214,7 @@ function UserLogin() {
         <div className="auth-switch">
           <button
             className="switch-button"
-            onClick={() => {
-              setIsSignup(!isSignup);
-              setError('');
-              setPasswordErrors([]);
-              setFormData({ username: '', password: '', name: '' });
-            }}
+            onClick={resetForm}
           >
             {isSignup ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
           </button>
