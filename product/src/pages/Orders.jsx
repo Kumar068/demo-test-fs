@@ -26,14 +26,25 @@ function Orders() {
 
   const fetchOrders = async () => {
     try {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      
+      if (!storedUser || !storedUser._id) {
+        setError('User session not found');
+        navigate('/login');
+        return;
+      }
+
       const response = await api.get('/api/orders/user', {
         headers: {
-          'X-User-Id': user.id
+          'Content-Type': 'application/json',
+          'X-User-Id': storedUser._id
         }
       });
+      
       setOrders(response.data);
       setLoading(false);
-    } catch (err) {
+    } catch (error) {
+      console.error('Error fetching orders:', error);
       setError('Failed to fetch orders');
       setLoading(false);
     }
@@ -99,4 +110,4 @@ function Orders() {
   );
 }
 
-export default Orders; 
+export default Orders;

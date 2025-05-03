@@ -14,6 +14,17 @@ function Dashboard() {
     navigate('/');
   };
 
+  const handleCheckout = async () => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    
+    if (!storedUser || !storedUser._id) {
+      navigate('/login');
+      return;
+    }
+
+    navigate('/cart');
+  };
+
   if (!user) {
     navigate('/login');
     return null;
@@ -83,7 +94,12 @@ function Dashboard() {
                   <span>Total:</span>
                   <span>₹{getCartTotal().toFixed(2)}</span>
                 </div>
-                <button className="checkout-button">Proceed to Checkout</button>
+                <button 
+                  className="checkout-button"
+                  onClick={handleCheckout}
+                >
+                  Proceed to Checkout
+                </button>
               </div>
             </>
           )}
@@ -93,4 +109,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;

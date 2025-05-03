@@ -182,4 +182,20 @@
   border-radius: 4px;
   margin: 1rem 0;
   text-align: center;
-} 
+}
+
+.payment-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  margin-top: 5px;
+  color: black;
+}
+
+.payment-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+}

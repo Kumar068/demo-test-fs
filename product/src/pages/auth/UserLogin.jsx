@@ -81,6 +81,8 @@ function UserLogin() {
         throw new Error(data.message || 'Authentication failed');
       }
 
+      // Store user data directly without token
+      localStorage.setItem('user', JSON.stringify(data.user));
       login(data.user);
       navigate('/');
     } catch (err) {

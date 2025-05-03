@@ -14,13 +14,14 @@ const api = axios.create({
 
 function Cart() {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState('UPI'); // Default payment method
 
   const handleCheckout = async () => {
-    if (!user) {
+    if (!isAuthenticated()) {
       navigate('/login');
       return;
     }
@@ -28,6 +29,14 @@ function Cart() {
     try {
       setIsProcessing(true);
       setError(null);
+
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      
+      if (!storedUser || !storedUser._id) {
+        setError('Please log in again to complete your purchase.');
+        navigate('/login');
+        return;
+      }
 
       const orderData = {
         items: cartItems.map(item => ({
@@ -38,7 +47,8 @@ function Cart() {
           selectedColor: item.product.selectedColor
         })),
         totalAmount: getCartTotal(),
-        shippingAddress: {
+        paymentMethod: paymentMethod, // Add this line to include payment method
+        shippingAddress: user.address || {
           street: "Default Street",
           city: "Default City",
           state: "Default State",
@@ -49,18 +59,23 @@ function Cart() {
 
       const response = await api.post('/api/orders', orderData, {
         headers: {
-          'X-User-Id': user.id,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-User-Id': storedUser._id
         }
       });
       
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         clearCart();
         navigate('/orders');
       }
     } catch (err) {
-      setError('Failed to create order. Please try again.');
-      console.error('Checkout error:', err);
+      if (err.response?.status === 401) {
+        setError('Your session has expired. Please login again.');
+        navigate('/login');
+      } else {
+        setError('Failed to create order. Please try again.');
+        console.error('Checkout error:', err);
+      }
     } finally {
       setIsProcessing(false);
     }
@@ -135,7 +150,14 @@ function Cart() {
           </div>
           <div className="summary-row">
             <span>Payment Method</span>
-            <span>Cash on Delivery</span>
+            <select 
+              value={paymentMethod} 
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="payment-select"
+            >
+              <option value="UPI">UPI Payment</option>
+              <option value="COD">Cash on Delivery</option>
+            </select>
           </div>
           <div className="summary-total">
             <span>Total</span>
@@ -147,7 +169,7 @@ function Cart() {
             onClick={handleCheckout}
             disabled={isProcessing}
           >
-            {isProcessing ? 'Processing...' : 'Proceed to Checkout (COD)'}
+            {isProcessing ? 'Processing...' : `Proceed to ${paymentMethod === 'UPI' ? 'UPI Payment' : 'Checkout (COD)'}`}
           </button>
           <br/><br/>
           <Link to="/" className="continue-shopping">
@@ -159,4 +181,4 @@ function Cart() {
   );
 }
 
-export default Cart; 
+export default Cart;
