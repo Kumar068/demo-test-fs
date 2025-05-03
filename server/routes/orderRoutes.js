@@ -14,7 +14,7 @@ router.post('/', auth, async (req, res) => {
       totalAmount,
       paymentMethod: paymentMethod || 'UPI', // Default to UPI if not specified
       shippingAddress,
-      status: 'pending'
+      status: 'completed'
     });
 
     const savedOrder = await order.save();
