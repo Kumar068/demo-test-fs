@@ -57,10 +57,12 @@ function Cart() {
         }
       };
 
+      const token = localStorage.getItem('token');
       const response = await api.post('/api/orders', orderData, {
         headers: {
           'Content-Type': 'application/json',
-          'X-User-Id': storedUser._id
+          'X-User-Id': storedUser._id,
+          'Authorization': token ? `Bearer ${token}` : ''
         }
       });
       

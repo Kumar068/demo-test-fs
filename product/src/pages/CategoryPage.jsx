@@ -44,6 +44,7 @@ function CategoryPage() {
       try {
         setLoading(true);
         console.log('Fetching products for category:', category);
+        // Pass the category to the API service which will use the updated backend endpoint
         const data = await getProducts(category === 'all' ? null : category);
         console.log('Received products from API:', data);
         // Filter by style on the frontend

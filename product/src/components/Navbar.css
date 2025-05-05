@@ -28,9 +28,50 @@
     object-fit: contain;
 }
 
+.category-nav {
+    display: none;
+    align-items: center;
+}
+
+.category-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+.category-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.category-nav a:hover {
+    color: #000;
+}
+
+.category-nav a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+.category-nav a:hover:after {
+    width: 100%;
+}
+
 .search-bar {
-    flex: 0 1 400px;
-    margin: 0 2rem;
+    flex: 0 1 300px;
+    margin: 0 1rem;
 }
 
 .search-bar input {

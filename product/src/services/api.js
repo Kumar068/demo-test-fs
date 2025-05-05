@@ -17,6 +17,7 @@ export const getProducts = async (category, style) => {
       url += `?${queryString}`;
     }
     
+    console.log('Fetching products from URL:', url);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -39,4 +40,4 @@ export const getProduct = async (id) => {
     console.error('Error fetching product:', error);
     throw error;
   }
-}; 
+};

@@ -7,10 +7,26 @@ const mongoose = require('mongoose');
 // Get all products
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
+    const { category } = req.query;
+    
+    // If category is provided as a query parameter, filter by it
+    const filter = category ? { category } : {};
+    
+    const products = await Product.find(filter);
     res.json(products);
   } catch (error) {
     console.error('Get products error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get products by category
+router.get('/category/:category', async (req, res) => {
+  try {
+    const products = await Product.find({ category: req.params.category });
+    res.json(products);
+  } catch (error) {
+    console.error('Get products by category error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -34,17 +50,6 @@ router.get('/:id', async (req, res) => {
     res.json(product);
   } catch (error) {
     console.error('Get product error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Get products by category
-router.get('/category/:category', async (req, res) => {
-  try {
-    const products = await Product.find({ category: req.params.category });
-    res.json(products);
-  } catch (error) {
-    console.error('Get products by category error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

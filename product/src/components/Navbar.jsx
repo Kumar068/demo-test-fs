@@ -60,7 +60,6 @@ function Navbar() {
                     <span className="user-info">{user.username}</span>
                     <Link to="/dashboard" onClick={() => setShowDropdown(false)}>Dashboard</Link>
                     <Link to="/shipping-address" onClick={() => setShowDropdown(false)}>
-                      <FontAwesomeIcon icon={faLocationDot} className="menu-icon" /> 
                       Shipping Address
                     </Link>
                     <Link to="/orders" onClick={() => setShowDropdown(false)}>My Orders</Link>

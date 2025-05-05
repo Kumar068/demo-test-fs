@@ -27,6 +27,7 @@ function Orders() {
   const fetchOrders = async () => {
     try {
       const storedUser = JSON.parse(localStorage.getItem('user'));
+      const token = localStorage.getItem('token');
       
       if (!storedUser || !storedUser._id) {
         setError('User session not found');
@@ -37,7 +38,8 @@ function Orders() {
       const response = await api.get('/api/orders/user', {
         headers: {
           'Content-Type': 'application/json',
-          'X-User-Id': storedUser._id
+          'X-User-Id': storedUser._id,
+          'Authorization': token ? `Bearer ${token}` : ''
         }
       });
       
