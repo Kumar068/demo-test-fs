@@ -1,17 +1,20 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const auth = async (req, res, next) => {
   try {
-    // Get user ID from header
-    const userId = req.header('X-User-Id');
+    // Get token from header
+    const token = req.header('Authorization')?.replace('Bearer ', '');
     
-    // Check if user ID exists
-    if (!userId) {
-      return res.status(401).json({ message: 'No user ID provided, access denied' });
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided, access denied' });
     }
 
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
+    
     // Find user by id
-    const user = await User.findById(userId);
+    const user = await User.findById(decoded.userId);
     
     if (!user) {
       return res.status(401).json({ message: 'User not found' });

@@ -81,9 +81,8 @@ function UserLogin() {
         throw new Error(data.message || 'Authentication failed');
       }
 
-      // Store user data directly without token
-      localStorage.setItem('user', JSON.stringify(data.user));
-      login(data.user);
+      // Pass both user and token to the login function
+      login(data.user, data.token);
       navigate('/');
     } catch (err) {
       setError(err.message);

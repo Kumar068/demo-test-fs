@@ -59,7 +59,8 @@ function AdminLogin() {
         throw new Error('Unauthorized access. Admin privileges required.');
       }
 
-      login(data.user);
+      // Pass both user and token to the login function
+      login(data.user, data.token);
       navigate('/admin');
     } catch (err) {
       setError(err.message);

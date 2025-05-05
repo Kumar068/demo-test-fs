@@ -17,12 +17,43 @@ function UserManagement() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/users');
-      if (!response.ok) throw new Error('Failed to fetch users');
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('Authentication token not found. Please log in as admin.');
+        // Optionally redirect to login: navigate('/admin/login');
+        return; // Stop execution if no token
+      }
+
+      const response = await fetch('http://localhost:5000/api/auth/users', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 401) {
+        throw new Error('Unauthorized: Invalid or expired token. Please log in again.');
+      }
+      if (response.status === 403) {
+        throw new Error('Forbidden: Admin privileges required.');
+      }
+      if (!response.ok) {
+        // General fetch error
+        throw new Error(`Failed to fetch users (Status: ${response.status})`);
+      }
+
       const data = await response.json();
       setUsers(data);
+      setError(null); // Clear previous errors on success
     } catch (error) {
-      setError('Failed to fetch users');
+      console.error('Error fetching users:', error);
+      setError(error.message);
+      // Consider logging out or redirecting if auth fails persistently
+      // if (error.message.includes('Unauthorized') || error.message.includes('Forbidden')) {
+      //   logout(); // Assuming logout is available from useAuth()
+      //   navigate('/admin/login');
+      // }
     }
   };
 
@@ -168,4 +199,4 @@ function UserManagement() {
   );
 }
 
-export default UserManagement; 
+export default UserManagement;
