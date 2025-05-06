@@ -71,7 +71,7 @@ function Orders() {
                   <span className="order-date">
                     {new Date(order.createdAt).toLocaleDateString()}
                   </span>
-                  <span className="order-status">{order.status}</span>
+                  <span className="order-status">{order.status} | Delivery in 2 Days</span>
                 </div>
                 <span className="order-total">₹{order.totalAmount.toFixed(2)}</span>
               </div>

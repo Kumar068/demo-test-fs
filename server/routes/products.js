@@ -7,12 +7,14 @@ const mongoose = require('mongoose');
 // Get all products
 router.get('/', async (req, res) => {
   try {
-    const { category } = req.query;
-    
+    const { category, limit } = req.query;
     // If category is provided as a query parameter, filter by it
     const filter = category ? { category } : {};
-    
-    const products = await Product.find(filter);
+    let query = Product.find(filter);
+    if (limit) {
+      query = query.limit(Number(limit));
+    }
+    const products = await query;
     res.json(products);
   } catch (error) {
     console.error('Get products error:', error);
